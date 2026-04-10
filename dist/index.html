@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India's Magic Nuclear Reactor</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script data-goatcounter="https://magicreactor.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            pink: '#FFA6C9',
+                            blue: '#A6D4FF',
+                            green: '#A6FFAF',
+                            yellow: '#FFF0A6',
+                            purple: '#D4A6FF',
+                            orange: '#FFD4A6',
+                            cream: '#FFFBF0',
+                            dark: '#1E293B'
+                        }
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'float-delayed': 'float 4.5s ease-in-out infinite 1s',
+                        'wiggle': 'wiggle 2s ease-in-out infinite',
+                        'wiggle-fast': 'wiggle 0.5s ease-in-out infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'dash': 'dash 1.5s linear infinite',
+                        'flow-down': 'flowDown 2s linear infinite',
+                        'move-road': 'moveRoad 2s linear infinite',
+                        'drop-fuel': 'dropFuel 3s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        dash: {
+                            'to': { strokeDashoffset: -20 }
+                        },
+                        flowDown: {
+                            '0%': { transform: 'translateY(-10px)', opacity: 0 },
+                            '50%': { opacity: 1 },
+                            '100%': { transform: 'translateY(10px)', opacity: 0 }
+                        },
+                        moveRoad: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        dropFuel: {
+                            '0%': { transform: 'translate(0, -20px) scale(0.5)', opacity: 0 },
+                            '15%': { transform: 'translate(-30px, 0) scale(1)', opacity: 1 },
+                            '100%': { transform: 'translate(-150px, 0) scale(1)', opacity: 0 }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FFFBF0;
+            color: #1E293B;
+            background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+        
+        .cute-card {
+            background: #ffffff;
+            border: 4px solid #1E293B;
+            border-radius: 24px;
+            box-shadow: 6px 6px 0px #1E293B;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .cute-card.interactive:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px #1E293B;
+        }
+
+        .cute-pill {
+            border: 3px solid #1E293B;
+            box-shadow: 3px 3px 0px #1E293B;
+            font-weight: 800;
+        }
+
+        .cute-btn {
+            border: 3px solid #1E293B;
+            box-shadow: 3px 3px 0px #1E293B;
+            transition: all 0.1s ease;
+        }
+        
+        .cute-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px #1E293B;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .path-line {
+            stroke-dasharray: 10 10;
+            animation: dash 1s linear infinite;
+        }
+        
+        .pipe-pattern {
+            background-image: repeating-linear-gradient(45deg, rgba(30,41,59,0.1) 0, rgba(30,41,59,0.1) 10px, transparent 10px, transparent 20px);
+        }
+
+        .blueprint-bg {
+            background-color: #f8fafc; 
+            background-image: linear-gradient(#e2e8f0 2px, transparent 2px), linear-gradient(90deg, #e2e8f0 2px, transparent 2px); 
+            background-size: 30px 30px;
+        }
+
+        #wandering-atom {
+            transition: transform 3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-pastel-pink selection:text-pastel-dark">
+
+    <!-- FLOATING CHAI4ME BUTTON -->
+    <div class="fixed bottom-6 left-4 z-50 w-[130px] md:w-[150px]">
+        <a href="https://chai4.me/hari" target="_blank" title="Support hari on Chai4Me" class="cute-card interactive bg-white p-2 md:p-3 flex items-center justify-center gap-1 md:gap-2 font-black cursor-pointer hover:bg-slate-100 flex-col group border-[3px]">
+            <img src="https://chai4.me/icons/wordmark.png" alt="Chai4Me" class="h-4 md:h-5 object-contain group-hover:scale-110 transition-transform shrink-0"/>
+            <span class="text-pastel-dark text-center leading-tight text-[10px] md:text-[11px]" data-i18n="float_chai_short">Enjoying?<br/>Support with a tea ☕</span>
+        </a>
+    </div>
+
+    <!-- FLOATING LANGUAGE TOGGLE -->
+    <div class="fixed bottom-6 right-4 md:right-6 z-50 flex bg-white border-4 border-pastel-dark rounded-full shadow-[4px_4px_0px_#1E293B] overflow-hidden p-1">
+        <button id="btn-en" onclick="setLang('en')" class="px-3 py-1.5 md:px-4 md:py-2 font-black text-xs md:text-sm rounded-full transition-colors bg-pastel-pink text-pastel-dark">ENG</button>
+        <button id="btn-ta" onclick="setLang('ta')" class="px-3 py-1.5 md:px-4 md:py-2 font-black text-xs md:text-sm rounded-full transition-colors hover:bg-slate-100 text-slate-400">தமிழ்</button>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-[90vh] flex flex-col items-center justify-center pt-10 pb-16 px-4 overflow-hidden border-b-8 border-pastel-blue">
+        
+        <!-- Ambient Background Atoms -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            <svg class="absolute top-[10%] left-[10%] w-16 h-16 animate-float opacity-70 animate-spin-slow" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="#FFA6C9" stroke="#1E293B" stroke-width="3"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(-45 50 50)"/></svg>
+            <svg class="absolute bottom-[20%] left-[5%] w-12 h-12 animate-float-delayed opacity-60 animate-spin-slow" style="animation-direction: reverse;" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="#A6D4FF" stroke="#1E293B" stroke-width="3"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(-45 50 50)"/></svg>
+            <svg class="absolute top-[20%] right-[10%] w-20 h-20 animate-float opacity-80 animate-spin-slow" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="#A6FFAF" stroke="#1E293B" stroke-width="3"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(-45 50 50)"/></svg>
+            <svg class="absolute bottom-[10%] right-[15%] w-14 h-14 animate-float-delayed opacity-50 animate-spin-slow" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="#FFF0A6" stroke="#1E293B" stroke-width="3"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="35" ry="12" fill="none" stroke="#1E293B" stroke-width="3" transform="rotate(-45 50 50)"/></svg>
+        </div>
+
+        <!-- Bouncing Tags -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8 z-10 reveal">
+            <span class="cute-pill bg-pastel-pink text-pastel-dark px-4 py-2 rounded-full text-sm animate-bounce" data-i18n="tag_1">⚛️ 500 MWe Power</span>
+            <span class="cute-pill bg-pastel-blue text-pastel-dark px-4 py-2 rounded-full text-sm animate-bounce" style="animation-delay: 0.2s;" data-i18n="tag_2">🇮🇳 100% Indigenous</span>
+            <span class="cute-pill bg-pastel-green text-pastel-dark px-4 py-2 rounded-full text-sm animate-bounce" style="animation-delay: 0.4s;" data-i18n="tag_3">🌟 2nd Nation After Russia</span>
+        </div>
+
+        <div class="text-center z-10 max-w-4xl mx-auto reveal">
+            <div class="inline-block bg-white border-4 border-pastel-dark rounded-xl px-4 py-1 mb-6 transform -rotate-2 font-black text-pastel-dark shadow-[4px_4px_0px_#1E293B]" data-i18n="hero_location">
+                📍 KALPAKKAM, INDIA • APRIL 2026
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-black text-pastel-dark leading-tight mb-6">
+                <span data-i18n="hero_title_1">India's Magic</span> <br/>
+                <span class="relative inline-block mt-2">
+                    <span class="absolute inset-0 bg-pastel-yellow transform rotate-1 rounded-xl -z-10 border-4 border-pastel-dark"></span>
+                    <span class="relative px-4" data-i18n="hero_title_2">Nuclear Reactor!</span>
+                </span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl font-bold text-slate-700 mb-10 max-w-2xl mx-auto leading-relaxed">
+                <span data-i18n="hero_desc_1">A 70-year dream comes true. India successfully achieves criticality in the </span> 
+                <span class="text-pastel-dark bg-pastel-pink px-2 rounded border-2 border-pastel-dark inline-block" data-i18n="hero_desc_2">Fast Breeder Reactor</span><span data-i18n="hero_desc_3">.</span>
+            </p>
+        </div>
+
+        <!-- CUTE REACTOR SVG ILLUSTRATION -->
+        <div class="relative w-64 h-64 animate-float z-10 reveal">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-xl overflow-visible">
+                <path d="M 30 50 Q 40 40 50 30 Q 40 20 30 10 Q 20 20 10 30 Q 20 40 30 50 Z" fill="#FFF0A6" stroke="#1E293B" stroke-width="4" class="animate-pulse" />
+                <path d="M 170 80 Q 180 70 190 60 Q 180 50 170 40 Q 160 50 150 60 Q 160 70 170 80 Z" fill="#FFA6C9" stroke="#1E293B" stroke-width="4" class="animate-pulse" style="animation-delay: 0.5s;" />
+                <rect x="40" y="140" width="120" height="40" rx="10" fill="#A6D4FF" stroke="#1E293B" stroke-width="6" />
+                <path d="M 40 140 C 40 50, 160 50, 160 140 Z" fill="#ffffff" stroke="#1E293B" stroke-width="6" />
+                <circle cx="80" cy="110" r="8" fill="#1E293B" />
+                <circle cx="120" cy="110" r="8" fill="#1E293B" />
+                <path d="M 90 120 Q 100 130 110 120" fill="none" stroke="#1E293B" stroke-width="5" stroke-linecap="round" />
+                <ellipse cx="65" cy="115" rx="8" ry="4" fill="#FFA6C9" opacity="0.8" />
+                <ellipse cx="135" cy="115" rx="8" ry="4" fill="#FFA6C9" opacity="0.8" />
+                <path d="M 105 60 L 90 85 L 105 85 L 95 110 L 115 80 L 100 80 Z" fill="#FFF0A6" stroke="#1E293B" stroke-width="3" />
+            </svg>
+        </div>
+    </header>
+
+    <!-- SECTION 2: THE MAGIC POT STORY -->
+    <section class="py-16 px-4 w-full relative z-10 reveal bg-pastel-yellow border-b-8 border-pastel-orange">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
+            
+            <div class="md:w-3/5">
+                <div class="inline-flex items-center gap-2 bg-pastel-dark text-white font-black px-4 py-1 rounded-full border-4 border-pastel-pink mb-4 transform -rotate-2" data-i18n="sec2_tag">THE STORY 💡</div>
+                <h2 class="text-4xl md:text-5xl font-black mb-6" data-i18n="sec2_title">The "Magic Pot" of Energy</h2>
+                <p class="text-lg font-bold text-slate-700 mb-4 leading-relaxed" data-i18n="sec2_desc_1">
+                    You might have heard about the <span class="bg-pastel-orange px-2 border-2 border-pastel-dark rounded">Akshaya Patra</span> in childhood stories from your grandma—a magical vessel in Hindu mythology that never, ever runs out of food.
+                </p>
+                <p class="text-lg font-bold text-slate-700 leading-relaxed" data-i18n="sec2_desc_2">
+                    Well, the Fast Breeder Reactor is exactly that, but for electricity! It acts like a magical loop. It actually produces <strong>more nuclear fuel than it eats.</strong> It burns Plutonium, and uses a blanket of Thorium sand to magically "breed" brand new Uranium fuel. It is a never-ending cycle that could power us for centuries!
+                </p>
+            </div>
+
+            <div class="md:w-2/5 flex flex-col items-center justify-center relative">
+                <!-- SVG Magic Pot -->
+                <svg viewBox="-50 -80 300 350" class="w-72 h-72 animate-float overflow-visible">
+                    <!-- Glow behind -->
+                    <circle cx="100" cy="110" r="80" fill="#FFFBF0" class="animate-pulse" opacity="0.5"/>
+                    
+                    <!-- U-233 Bubbles coming out -->
+                    <g style="animation: float 3s ease-in-out infinite;">
+                        <circle cx="60" cy="10" r="25" fill="#A6FFAF" stroke="#1E293B" stroke-width="4" />
+                        <text x="60" y="15" text-anchor="middle" font-weight="900" font-size="14" fill="#1E293B">U-233</text>
+                    </g>
+                    <g style="animation: float 4s ease-in-out infinite 0.5s;">
+                        <circle cx="140" cy="30" r="20" fill="#A6FFAF" stroke="#1E293B" stroke-width="4" />
+                        <text x="140" y="34" text-anchor="middle" font-weight="900" font-size="12" fill="#1E293B">U-233</text>
+                    </g>
+                    <circle cx="30" cy="50" r="12" fill="#A6FFAF" stroke="#1E293B" stroke-width="4" class="animate-bounce" />
+                    
+                    <!-- The Golden Pot -->
+                    <path d="M 50 120 C 30 180, 170 180, 150 120 C 140 80, 120 70, 120 60 L 80 60 C 80 70, 60 80, 50 120 Z" fill="#FFD4A6" stroke="#1E293B" stroke-width="6" />
+                    <ellipse cx="100" cy="60" rx="40" ry="12" fill="#FFA6C9" stroke="#1E293B" stroke-width="6" />
+                    <ellipse cx="100" cy="60" rx="30" ry="6" fill="#1E293B" opacity="0.2" />
+                    
+                    <!-- Details on pot -->
+                    <path d="M 60 140 Q 100 170 140 140" fill="none" stroke="#1E293B" stroke-width="4" stroke-linecap="round" />
+                    <path d="M 75 160 Q 100 180 125 160" fill="none" stroke="#1E293B" stroke-width="4" stroke-linecap="round" />
+                    
+                    <!-- Plutonium going in -->
+                    <path d="M 200 10 Q 160 30 130 45" fill="none" stroke="#1E293B" stroke-width="4" stroke-dasharray="8 8" class="animate-dash" />
+                    <circle cx="200" cy="10" r="14" fill="#A6D4FF" stroke="#1E293B" stroke-width="4" />
+                    <text x="200" y="15" text-anchor="middle" font-weight="900" font-size="12" fill="#1E293B">Pu</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2.5: THE MAGIC CAR ANALOGY -->
+    <section class="py-16 px-4 w-full relative z-10 reveal bg-pastel-cream border-b-8 border-pastel-green">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-6 text-pastel-dark" data-i18n="sec2_5_title">Wait... A Magic Car? 🚗✨</h2>
+            <p class="text-lg font-bold text-slate-700 mb-10 max-w-2xl mx-auto leading-relaxed" data-i18n="sec2_5_desc">
+                Still sounds complicated? Imagine driving a car that actually <strong>fills up its own petrol tank</strong> as you drive it down the road! That's exactly what a Fast Breeder Reactor does. It "breeds" more fuel than it consumes.
+            </p>
+            
+            <!-- Magic Car Animated Diagram -->
+            <div class="relative w-full h-40 md:h-48 flex items-center justify-center overflow-hidden bg-pastel-blue/20 rounded-3xl border-4 border-pastel-dark mt-8">
+                <!-- Infinite Road -->
+                <div class="absolute bottom-8 left-0 w-[200%] flex animate-move-road">
+                    <div class="w-1/2 border-t-4 border-dashed border-pastel-dark opacity-30 h-2"></div>
+                    <div class="w-1/2 border-t-4 border-dashed border-pastel-dark opacity-30 h-2"></div>
+                </div>
+                
+                <!-- Driving Car Group (Centered and Bouncing) -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-48 h-32 z-10 flex flex-col items-center">
+                    <!-- Refueling Text above car -->
+                    <div class="bg-pastel-green border-2 border-pastel-dark rounded-full px-3 py-1 text-[10px] font-black text-pastel-dark mb-1 animate-bounce shadow-[2px_2px_0px_#1E293B]">
+                        FUEL +100% ⛽
+                    </div>
+                    
+                    <div class="relative w-full flex-grow flex justify-center">
+                        <!-- Car SVG -->
+                        <svg viewBox="0 0 150 100" class="w-32 h-32 absolute bottom-0 animate-wiggle-fast">
+                            <rect x="20" y="40" width="110" height="40" rx="10" fill="#A6D4FF" stroke="#1E293B" stroke-width="4"/>
+                            <path d="M 30 40 L 50 15 L 100 15 L 120 40 Z" fill="#fff" stroke="#1E293B" stroke-width="4"/>
+                            <!-- Wheels -->
+                            <circle cx="45" cy="80" r="15" fill="#1E293B"/>
+                            <circle cx="45" cy="80" r="6" fill="#fff" class="animate-spin-slow"/>
+                            <circle cx="105" cy="80" r="15" fill="#1E293B"/>
+                            <circle cx="105" cy="80" r="6" fill="#fff" class="animate-spin-slow"/>
+                        </svg>
+
+                        <!-- Fuel dropping behind -->
+                        <svg viewBox="0 0 50 50" class="w-10 h-10 absolute bottom-0 left-4 z-0 animate-drop-fuel">
+                            <rect x="10" y="10" width="30" height="35" rx="4" fill="#A6FFAF" stroke="#1E293B" stroke-width="3"/>
+                            <rect x="20" y="5" width="10" height="5" fill="#1E293B"/>
+                            <text x="25" y="32" text-anchor="middle" font-weight="900" font-size="10" fill="#1E293B">⛽</text>
+                        </svg>
+                        <svg viewBox="0 0 50 50" class="w-10 h-10 absolute bottom-0 left-4 z-0 animate-drop-fuel" style="animation-delay: 1.5s;">
+                            <rect x="10" y="10" width="30" height="35" rx="4" fill="#A6FFAF" stroke="#1E293B" stroke-width="3"/>
+                            <rect x="20" y="5" width="10" height="5" fill="#1E293B"/>
+                            <text x="25" y="32" text-anchor="middle" font-weight="900" font-size="10" fill="#1E293B">⛽</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: THE 3-STAGE FACTORY -->
+    <section class="py-24 px-4 w-full relative z-10 border-b-8 border-pastel-purple">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h3 class="text-4xl md:text-6xl font-black text-pastel-dark" data-i18n="sec3_title">Homi Bhabha's Master Plan</h3>
+                <p class="text-xl font-bold text-slate-600 mt-4 max-w-2xl mx-auto" data-i18n="sec3_sub">A multi-generational engineering loop where the waste of one reactor becomes the precious fuel for the next.</p>
+            </div>
+
+            <div class="flex flex-col gap-0 relative">
+                
+                <!-- STAGE 1 -->
+                <div class="cute-card bg-pastel-blue p-8 relative z-10 reveal interactive transform">
+                    <div class="absolute -top-5 left-8 bg-white text-pastel-dark font-black px-6 py-2 rounded-full border-4 border-pastel-dark shadow-[4px_4px_0px_#1E293B] transform -rotate-2" data-i18n="stg1_badge">STAGE 1: DONE ✅</div>
+                    
+                    <div class="flex flex-col md:flex-row gap-8 mt-4 items-center">
+                        <div class="md:w-1/2">
+                            <h4 class="text-3xl font-black mb-3" data-i18n="stg1_title">Heavy Water Reactors</h4>
+                            <p class="font-bold text-slate-700 text-lg leading-relaxed mb-4" data-i18n="stg1_desc">India built these first. They use naturally occurring, un-enriched Uranium. While they generate electricity, their most important job is creating a specific byproduct in their spent fuel.</p>
+                        </div>
+                        <div class="md:w-1/2 w-full bg-white border-4 border-pastel-dark rounded-2xl p-6 shadow-[inset_4px_4px_0px_rgba(0,0,0,0.05)] text-center relative overflow-hidden">
+                            <div class="flex justify-between items-center relative z-10">
+                                <div class="text-left flex flex-col items-center">
+                                    <span class="text-xs font-black uppercase text-slate-500" data-i18n="lbl_input">Input</span>
+                                    <svg class="w-10 h-10 mt-2 mb-1" viewBox="0 0 50 50"><path d="M10 25 L20 10 L35 15 L45 30 L30 45 L15 40 Z" fill="#94A3B8" stroke="#1E293B" stroke-width="3"/></svg>
+                                    <div class="bg-slate-200 border-2 border-pastel-dark rounded px-2 py-1 font-bold text-sm" data-i18n="stg1_in">Natural Uranium</div>
+                                </div>
+                                <div class="text-3xl animate-bounce">➡️</div>
+                                <div class="text-right flex flex-col items-center">
+                                    <span class="text-xs font-black uppercase text-slate-500" data-i18n="lbl_output">Output</span>
+                                    <svg class="w-10 h-10 mt-2 mb-1 animate-pulse" viewBox="0 0 50 50"><path d="M25 10 Q35 25 35 35 A10 10 0 1 1 15 35 Q15 25 25 10 Z" fill="#FFA6C9" stroke="#1E293B" stroke-width="3"/></svg>
+                                    <div class="bg-pastel-pink border-2 border-pastel-dark rounded px-2 py-1 font-black text-sm" data-i18n="stg1_out">Plutonium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VISUAL PIPE DOWN -->
+                <div class="h-20 w-32 mx-auto border-x-8 border-pastel-dark pipe-pattern flex items-center justify-center relative -my-2 z-0 reveal">
+                    <div class="w-12 h-12 rounded-full bg-pastel-pink border-4 border-pastel-dark animate-flow-down flex items-center justify-center font-black text-[12px] leading-none">Pu</div>
+                </div>
+
+                <!-- STAGE 2 -->
+                <div class="cute-card bg-pastel-pink p-8 relative z-10 reveal interactive transform scale-[1.02] shadow-[10px_10px_0px_#1E293B]">
+                    <div class="absolute -top-5 right-8 bg-pastel-yellow text-pastel-dark font-black px-6 py-2 rounded-full border-4 border-pastel-dark shadow-[4px_4px_0px_#1E293B] transform rotate-2 animate-wiggle" data-i18n="stg2_badge">STAGE 2: NOW LIVE ✨</div>
+                    
+                    <div class="flex flex-col md:flex-row-reverse gap-8 mt-4 items-center">
+                        <div class="md:w-1/2">
+                            <h4 class="text-3xl font-black mb-3" data-i18n="stg2_title">Fast Breeder Reactors</h4>
+                            <p class="font-bold text-slate-800 text-lg leading-relaxed mb-4" data-i18n="stg2_desc">The PFBR burns the Plutonium from Stage 1. But here's the trick: we surround the core with a "blanket" of Thorium sand. The fast neutrons hit the Thorium and transform it into brand new nuclear fuel!</p>
+                        </div>
+                        <div class="md:w-1/2 w-full bg-white border-4 border-pastel-dark rounded-2xl p-4 shadow-[inset_4px_4px_0px_rgba(0,0,0,0.05)] text-center">
+                            <div class="flex justify-between items-center">
+                                <div class="text-left flex flex-col items-center">
+                                    <span class="text-xs font-black uppercase text-slate-500 mb-1" data-i18n="lbl_input">Input</span>
+                                    <div class="bg-pastel-pink border-2 border-pastel-dark rounded px-2 py-1 font-bold text-xs" data-i18n="stg2_in1">Plutonium</div>
+                                    <div class="text-center font-black leading-3 my-1">+</div>
+                                    <div class="bg-pastel-orange border-2 border-pastel-dark rounded px-2 py-1 font-bold text-xs" data-i18n="stg2_in2">Thorium Sand</div>
+                                </div>
+                                <div class="text-3xl animate-bounce" style="animation-delay: 0.5s;">➡️</div>
+                                <div class="text-right flex flex-col items-center">
+                                    <span class="text-xs font-black uppercase text-slate-500" data-i18n="lbl_output">Output</span>
+                                    <svg class="w-12 h-12 mt-1 mb-1 animate-pulse" viewBox="0 0 50 50"><path d="M25 5 L40 25 L25 45 L10 25 Z" fill="#A6FFAF" stroke="#1E293B" stroke-width="3"/><path d="M25 5 L25 45" stroke="#1E293B" stroke-width="2"/><path d="M10 25 L40 25" stroke="#1E293B" stroke-width="2"/></svg>
+                                    <div class="bg-pastel-green border-2 border-pastel-dark rounded px-2 py-1 font-black text-sm text-green-900" data-i18n="stg2_out">U-233 Fuel</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VISUAL PIPE DOWN -->
+                <div class="h-20 w-32 mx-auto border-x-8 border-pastel-dark pipe-pattern flex items-center justify-center relative -my-2 z-0 reveal">
+                    <div class="w-14 h-14 rounded-full bg-pastel-green border-4 border-pastel-dark animate-flow-down flex items-center justify-center font-black text-[12px] leading-none">U-233</div>
+                </div>
+
+                <!-- STAGE 3 -->
+                <div class="cute-card bg-pastel-green p-8 relative z-10 reveal interactive transform">
+                    <div class="absolute -top-5 left-8 bg-white text-pastel-dark font-black px-6 py-2 rounded-full border-4 border-pastel-dark shadow-[4px_4px_0px_#1E293B] transform -rotate-2" data-i18n="stg3_badge">STAGE 3: THE FUTURE 🚀</div>
+                    
+                    <div class="flex flex-col md:flex-row gap-8 mt-4 items-center">
+                        <div class="md:w-1/2">
+                            <h4 class="text-3xl font-black mb-3" data-i18n="stg3_title">Thorium Reactors</h4>
+                            <p class="font-bold text-slate-800 text-lg leading-relaxed mb-4" data-i18n="stg3_desc">The ultimate goal. These future reactors will burn the U-233 created in Stage 2 alongside more Thorium. This creates an infinite, self-sustaining loop that provides centuries of clean power from India's own soil.</p>
+                        </div>
+                        <div class="md:w-1/2 w-full bg-white border-4 border-pastel-dark rounded-2xl p-6 shadow-[inset_4px_4px_0px_rgba(0,0,0,0.05)] text-center relative overflow-hidden flex flex-col items-center justify-center min-h-[160px]">
+                            <span class="text-xs font-black uppercase text-slate-500 z-10" data-i18n="stg3_loop_lbl">The Magic Loop</span>
+                            <svg viewBox="0 0 100 50" class="w-full h-24 absolute top-1/2 -translate-y-1/2 opacity-30 pointer-events-none">
+                                <path d="M25 25 C25 5, 75 5, 75 25 C75 45, 25 45, 25 25" fill="none" stroke="#1E293B" stroke-width="6" stroke-dasharray="8 4" class="animate-dash"/>
+                                <circle cx="25" cy="25" r="4" fill="#A6FFAF" stroke="#1E293B" stroke-width="2"/>
+                                <circle cx="75" cy="25" r="4" fill="#FFD4A6" stroke="#1E293B" stroke-width="2"/>
+                            </svg>
+                            <div class="bg-pastel-yellow border-4 border-pastel-dark rounded-xl px-4 py-2 font-black text-lg mt-2 transform rotate-1 shadow-[4px_4px_0px_#1E293B] z-10 flex items-center gap-2">
+                                <span class="animate-spin-slow">♻️</span> <span data-i18n="stg3_out">Infinite Energy!</span>
+                            </div>
+                            <p class="text-xs font-bold text-slate-600 mt-3 bg-white/80 px-2 rounded z-10" data-i18n="stg3_sub">U-233 + Thorium Cycle</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3.5: THE WASTE EATING MONSTER -->
+    <section class="py-16 px-4 w-full relative z-10 reveal bg-pastel-purple border-b-8 border-pastel-dark">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2 text-white">
+                <h2 class="text-4xl md:text-5xl font-black mb-4 text-white drop-shadow-[4px_4px_0px_#1E293B]" data-i18n="sec3_5_title">The Waste-Eating Monster 👾</h2>
+                <p class="text-lg font-bold text-white mb-4 leading-relaxed" data-i18n="sec3_5_desc_1">
+                    "But what about nuclear waste?!" you might ask. Fast Breeder Reactors actually <strong>EAT</strong> the radioactive waste from Stage 1 reactors!
+                </p>
+                <p class="text-lg font-bold text-white leading-relaxed" data-i18n="sec3_5_desc_2">
+                    Spent fuel from normal reactors remains dangerously radioactive for 10,000 years. The PFBR burns that waste down into material that is safe in just 300 years. India isn't just making clean energy—it's cleaning up old nuclear waste while doing it.
+                </p>
+                <div class="inline-block mt-6 bg-pastel-green text-pastel-dark font-black px-4 py-2 rounded-xl border-4 border-pastel-dark shadow-[4px_4px_0px_#1E293B] transform rotate-1" data-i18n="sec3_5_tag">Not a problem. A SOLUTION. ✅</div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <!-- SVG Waste Monster -->
+                <svg viewBox="0 0 200 150" class="w-full max-w-sm overflow-visible">
+                    <!-- Barrel entering mouth -->
+                    <g class="animate-dash">
+                        <rect x="140" y="50" width="30" height="40" rx="4" fill="#A6FFAF" stroke="#1E293B" stroke-width="4" transform="rotate(-15 155 70)"/>
+                        <path d="M145 55 L165 55 M145 85 L165 85" stroke="#1E293B" stroke-width="3" transform="rotate(-15 155 70)"/>
+                        <text x="155" y="75" text-anchor="middle" font-size="12" font-weight="bold" fill="#1E293B" transform="rotate(-15 155 70)">☢️</text>
+                    </g>
+                    <!-- Monster Body -->
+                    <path d="M 20 140 C 10 90, 40 40, 90 40 C 110 40, 130 50, 140 70 L 100 80 L 140 100 C 120 130, 100 140, 20 140 Z" fill="#D4A6FF" stroke="#1E293B" stroke-width="6" class="animate-bounce-slow"/>
+                    <!-- Eye -->
+                    <circle cx="80" cy="70" r="15" fill="#fff" stroke="#1E293B" stroke-width="5" class="animate-pulse"/>
+                    <circle cx="85" cy="70" r="6" fill="#1E293B"/>
+                    <!-- Teeth -->
+                    <path d="M 120 75 L 110 80 L 125 85 Z" fill="#fff" stroke="#1E293B" stroke-width="3"/>
+                    <path d="M 115 90 L 105 85 L 120 80 Z" fill="#fff" stroke="#1E293B" stroke-width="3"/>
+                    <!-- Clean Energy out back -->
+                    <g style="animation: float 2s ease-in-out infinite;">
+                        <circle cx="10" cy="100" r="15" fill="#FFF0A6" stroke="#1E293B" stroke-width="4"/>
+                        <text x="10" y="105" text-anchor="middle" font-size="12" font-weight="900" fill="#1E293B">⚡</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: WINDING TIMELINE WITH OPPOSITE VISUALS -->
+    <section class="py-24 px-4 w-full relative border-b-8 border-pastel-dark blueprint-bg">
+        <div class="text-center mb-20 reveal">
+            <h3 class="text-4xl md:text-6xl font-black text-pastel-dark mb-4" data-i18n="sec4_title">70 Years in the Making ⏳</h3>
+            <p class="text-xl font-bold text-slate-600 max-w-2xl mx-auto" data-i18n="sec4_sub">The complete history. Tap "Read More" on any card to uncover the deep details.</p>
+        </div>
+
+        <div class="max-w-5xl mx-auto relative">
+            <!-- Central Dotted Line -->
+            <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0 border-l-8 border-pastel-dark border-dotted md:-translate-x-1/2 z-0 opacity-30"></div>
+
+            <div class="space-y-16 relative z-10">
+                
+                <!-- 1. 1950s -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <div class="md:w-[45%] text-left md:text-right w-full z-10">
+                        <div class="cute-card bg-pastel-yellow p-5 text-left tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">1950s</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl1_title">Homi Bhabha's grand vision</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl1_desc">
+                                Dr Homi J. Bhabha drafts India's ambitious three-stage nuclear programme — engineered around one hard truth: India has almost no uranium, but enormous thorium reserves. The plan: use what little uranium exists to breed plutonium, then use plutonium to unlock thorium.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn w-full md:w-auto" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-start items-center pl-10">
+                        <svg class="w-24 h-24 animate-float opacity-80" viewBox="0 0 100 100"><path d="M50 10 C20 10, 20 40, 30 50 C30 60, 40 70, 50 70 C60 70, 70 60, 70 50 C80 40, 80 10, 50 10 Z" fill="#FFF0A6" stroke="#1E293B" stroke-width="4"/><path d="M40 70 L40 85 M60 70 L60 85 M35 85 L65 85 M40 95 L60 95" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="40" r="15" fill="#fff" stroke="#1E293B" stroke-width="3"/><path d="M50 40 M50 25 L50 55 M35 40 L65 40 M40 30 L60 50 M40 50 L60 30" stroke="#1E293B" stroke-width="2" class="animate-spin-slow"/></svg>
+                    </div>
+                </div>
+
+                <!-- 2. 1980s -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-end items-center pr-10">
+                        <svg class="w-20 h-20 animate-wiggle opacity-80" viewBox="0 0 100 100"><path d="M20 80 L50 20 L80 80 Z" fill="#A6D4FF" stroke="#1E293B" stroke-width="4"/><path d="M40 60 L60 60" stroke="#1E293B" stroke-width="4"/><circle cx="50" cy="20" r="5" fill="#1E293B"/></svg>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <div class="md:w-[45%] text-left w-full z-10">
+                        <div class="cute-card bg-pastel-blue p-5 tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">1980s</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl2_title">Design work begins at IGCAR</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl2_desc">
+                                The Indira Gandhi Centre for Atomic Research (IGCAR) in Kalpakkam begins designing the Prototype Fast Breeder Reactor. This is entirely indigenous — no foreign blueprint, no technology transfer.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 2004 -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <div class="md:w-[45%] text-left md:text-right w-full z-10">
+                        <div class="cute-card bg-pastel-pink p-5 text-left tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">2004</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl3_title">Construction begins at Kalpakkam</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl3_desc">
+                                BHAVINI breaks ground. The target: go operational by 2010. The reactor is cooled by liquid sodium — a highly reactive metal that burns on contact with air or water — making engineering extremely demanding.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn w-full md:w-auto" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-start items-center pl-10">
+                        <svg class="w-24 h-24 animate-float-delayed opacity-80" viewBox="0 0 100 100"><rect x="30" y="50" width="40" height="40" fill="#FFA6C9" stroke="#1E293B" stroke-width="4"/><path d="M10 50 L50 10 L90 50 M40 50 L40 30" fill="none" stroke="#1E293B" stroke-width="4"/><circle cx="40" cy="30" r="5" fill="#1E293B"/><rect x="40" y="60" width="20" height="30" fill="#FFF" stroke="#1E293B" stroke-width="3"/></svg>
+                    </div>
+                </div>
+
+                <!-- 4. 2010 - 2023 -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-end items-center pr-10">
+                        <svg class="w-20 h-20 animate-wiggle-fast opacity-80" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#cbd5e1" stroke="#1E293B" stroke-width="4"/><circle cx="50" cy="50" r="5" fill="#1E293B"/><path d="M50 50 L50 20 M50 50 L70 50" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/><path d="M80 20 Q90 10 95 25" fill="none" stroke="#A6D4FF" stroke-width="4" stroke-linecap="round"/><path d="M20 20 Q10 10 5 25" fill="none" stroke="#A6D4FF" stroke-width="4" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <div class="md:w-[45%] text-left w-full z-10">
+                        <div class="cute-card bg-slate-200 border-dashed border-4 p-5 tl-card cursor-pointer transform rotate-1" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-slate-600 text-white font-black px-3 py-1 rounded-lg text-sm">2010 – 2023</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl4_title">Over a decade of delays</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl4_desc">
+                                First-of-a-kind technology hurdles cause repeated setbacks. The PFBR is unlike anything India had built before. Each technical challenge is solved from scratch — yielding invaluable knowledge but pushing timelines by 13+ years.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Mar 2024 -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <div class="md:w-[45%] text-left md:text-right w-full z-10">
+                        <div class="cute-card bg-pastel-purple p-5 text-left tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">March 2024</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl5_title">PM Modi visits — core loading</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl5_desc">
+                                Prime Minister Modi visits Kalpakkam to witness the initiation of core loading — the first stage of fuelling the reactor. A milestone moment broadcast nationally, signalling that the long wait is nearly over.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn w-full md:w-auto" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-start items-center pl-10">
+                        <svg class="w-20 h-20 animate-spin-slow opacity-80" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="#D4A6FF" stroke="#1E293B" stroke-width="4" stroke-dasharray="10 5"/><circle cx="50" cy="50" r="10" fill="#1E293B"/></svg>
+                    </div>
+                </div>
+
+                <!-- 6. Jul 2024 -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-end items-center pr-10">
+                        <svg class="w-20 h-20 animate-float opacity-80" viewBox="0 0 100 100"><rect x="25" y="10" width="50" height="70" rx="5" fill="#FFD4A6" stroke="#1E293B" stroke-width="4"/><path d="M40 5 L60 5" stroke="#1E293B" stroke-width="6" stroke-linecap="round"/><path d="M40 40 L50 50 L70 30" fill="none" stroke="#1E293B" stroke-width="5" stroke-linecap="round" class="animate-dash"/></svg>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <div class="md:w-[45%] text-left w-full z-10">
+                        <div class="cute-card bg-pastel-orange p-5 tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">July 2024</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl6_title">Regulatory clearance granted</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl6_desc">
+                                India's Atomic Energy Regulatory Board (AERB) grants permission for the First Approach to Criticality — authorising loading of fuel into the reactor core and the start of low-power physics experiments.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Oct 2025 -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <div class="md:w-[45%] text-left md:text-right w-full z-10">
+                        <div class="cute-card bg-[#fff5a3] p-5 text-left tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">October 2025</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl7_title">Final fuel loading commences</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl7_desc">
+                                After resolving new technical issues and receiving fresh AERB clearance, full-scale fuel loading begins. 1,750 tonnes of liquid sodium coolant surround the core as engineers prepare for the pivotal moment.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn w-full md:w-auto" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-start items-center pl-10">
+                        <svg class="w-20 h-24 animate-flow-down opacity-80 overflow-visible" viewBox="-10 -20 120 150"><path d="M50 20 Q80 60 80 80 A30 30 0 1 1 20 80 Q20 60 50 20 Z" fill="#94A3B8" stroke="#1E293B" stroke-width="4"/><path d="M40 70 Q50 60 60 70" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <!-- 8. April 2026 (THE BIG ONE) -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-end items-center pr-10">
+                        <svg class="w-32 h-32 animate-pulse opacity-100" viewBox="0 0 100 100"><path d="M50 10 L60 35 L85 25 L70 45 L95 60 L70 65 L80 90 L55 75 L35 95 L40 70 L10 75 L30 55 L5 35 L35 40 L20 15 L45 30 Z" fill="#FFA6C9" stroke="#1E293B" stroke-width="3"/><circle cx="50" cy="50" r="15" fill="#FFF0A6" stroke="#1E293B" stroke-width="3"/></svg>
+                    </div>
+                    <!-- Big Glowing Dot -->
+                    <div class="absolute left-8 md:left-1/2 w-10 h-10 rounded-full bg-pastel-pink border-4 border-pastel-dark md:-translate-x-1/2 -ml-[17px] md:ml-0 z-10 flex items-center justify-center animate-bounce shadow-[0_0_15px_#FFA6C9]">
+                        <div class="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                    <div class="md:w-[45%] text-left w-full z-10">
+                        <div class="cute-card bg-pastel-green p-6 tl-card cursor-pointer transform scale-[1.05] shadow-[8px_8px_0px_#1E293B] relative" onclick="toggleTL(this)">
+                            <div class="absolute -top-4 -right-4 text-5xl animate-wiggle">🎉</div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm shadow-[2px_2px_0px_#FFA6C9]">6 April 2026</span>
+                            </div>
+                            <h4 class="text-2xl font-black mb-2 text-green-900" data-i18n="tl8_title">First criticality achieved!</h4>
+                            <p class="font-bold text-slate-800 text-sm" data-i18n="tl8_subtitle">A self-sustaining chain reaction ignites inside the PFBR.</p>
+                            
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl8_desc">
+                                India officially enters Stage 2 of Homi Bhabha's three-stage plan. PM Modi calls it "a proud moment for India" and "a defining step." India becomes only the second country after Russia to achieve this monumental feat.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn text-pastel-dark" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Sept 2026 -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <div class="md:w-[45%] text-left md:text-right w-full z-10">
+                        <div class="cute-card bg-white p-5 text-left tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-pastel-dark text-white font-black px-3 py-1 rounded-lg text-sm">Sept 2026 (Target)</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl9_title">Commercial power begins</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl9_desc">
+                                After staged power ascension, safety testing and AERB grid approval, the reactor connects to India's power grid — delivering 500 MW of clean electricity. Commercial operations mark the true start of Stage 2.
+                            </div>
+                            <button class="cute-btn cute-pill bg-slate-100 px-4 py-1 text-xs mt-4 hover:bg-slate-200 tl-btn w-full md:w-auto" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-start items-center pl-10">
+                        <svg class="w-20 h-20 animate-float opacity-80" viewBox="0 0 100 100"><path d="M40 10 L70 10 L50 50 L80 50 L30 90 L45 55 L20 55 Z" fill="#FFF0A6" stroke="#1E293B" stroke-width="4"/></svg>
+                    </div>
+                </div>
+
+                <!-- 10. 2030s -->
+                <div class="relative flex md:justify-between items-center w-full flex-col md:flex-row pl-20 md:pl-0 reveal">
+                    <!-- Empty Space Visual -->
+                    <div class="md:w-[45%] hidden md:flex justify-end items-center pr-10">
+                        <svg class="w-24 h-24 animate-wiggle opacity-80" viewBox="0 0 100 100">
+                            <!-- 3 small reactors -->
+                            <path d="M20 70 C20 40, 40 40, 40 70 Z" fill="#A6D4FF" stroke="#1E293B" stroke-width="3"/>
+                            <path d="M45 60 C45 30, 65 30, 65 60 Z" fill="#FFA6C9" stroke="#1E293B" stroke-width="3"/>
+                            <path d="M70 70 C70 40, 90 40, 90 70 Z" fill="#A6FFAF" stroke="#1E293B" stroke-width="3"/>
+                            <path d="M10 70 L100 70" stroke="#1E293B" stroke-width="4"/>
+                        </svg>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-white border-4 border-pastel-dark md:-translate-x-1/2 -ml-[9px] md:ml-0 z-10"></div>
+                    <div class="md:w-[45%] text-left w-full z-10">
+                        <div class="cute-card bg-pastel-blue p-5 tl-card cursor-pointer" onclick="toggleTL(this)">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="inline-block bg-slate-600 text-white font-black px-3 py-1 rounded-lg text-sm">2030s – 2040s</span>
+                            </div>
+                            <h4 class="text-xl font-black mb-2" data-i18n="tl10_title">Six more FBRs follow</h4>
+                            <div class="tl-content hidden mt-4 border-t-2 border-pastel-dark pt-4 font-bold text-slate-700 text-sm leading-relaxed" data-i18n="tl10_desc">
+                                Two more fast breeder reactors are planned at Kalpakkam once the PFBR proves stable. Then four FBR-600 commercial reactors at new sites across India — multiplying fissile material and paving the way for Stage 3.
+                            </div>
+                            <button class="cute-btn cute-pill bg-white px-4 py-1 text-xs mt-4 hover:bg-slate-100 tl-btn" data-i18n="btn_readmore">Read More ▾</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4.5: MISSION IMPOSSIBLE (CHALLENGE BOARD) -->
+    <section class="py-24 px-4 w-full relative z-10 reveal bg-pastel-dark text-white border-b-8 border-pastel-yellow overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-pastel-pink/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-pastel-blue/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-12">
+                <div class="inline-block bg-pastel-pink text-pastel-dark font-black px-4 py-1 rounded-full border-4 border-white mb-4 transform -rotate-2 shadow-[4px_4px_0px_#FFA6C9]" data-i18n="sec4_5_tag">ENGINEERING MARVEL 🛠️</div>
+                <h2 class="text-4xl md:text-6xl font-black mb-8 drop-shadow-[4px_4px_0px_#FFA6C9]" data-i18n="sec4_5_title">Mission Impossible</h2>
+                
+                <div class="cute-card bg-white/10 backdrop-blur-md border-white p-6 md:p-8 mb-12 text-left relative overflow-hidden mx-auto max-w-4xl transform hover:scale-[1.01] transition-transform">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-pastel-pink"></div>
+                    <p class="text-lg md:text-xl font-bold leading-relaxed text-white drop-shadow-md" data-i18n="sec4_5_desc_1">
+                        Building the PFBR was terrifyingly complex. It is cooled by <strong class="text-pastel-yellow">Liquid Sodium</strong>. Sodium burns violently on contact with air, and explodes on contact with water! Giving a 500 MW reactor passive safety systems with this metal is an insane feat of engineering.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                
+                <!-- Card 1: The Villain -->
+                <div class="cute-card bg-slate-800 border-white p-8 flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <svg viewBox="0 0 150 200" class="w-32 h-40 animate-float mb-4 overflow-visible">
+                        <path d="M 60 20 L 90 20 L 90 60 L 130 160 C 140 180, 120 190, 75 190 C 30 190, 10 180, 20 160 L 60 60 Z" fill="#FFFBF0" stroke="#FFF" stroke-width="6" fill-opacity="0.1"/>
+                        <path d="M 60 20 L 90 20 L 90 60 L 130 160 C 140 180, 120 190, 75 190 C 30 190, 10 180, 20 160 L 60 60 Z" fill="none" stroke="#FFF" stroke-width="6"/>
+                        <rect x="50" y="10" width="50" height="15" rx="5" fill="#A6D4FF" stroke="#FFF" stroke-width="4"/>
+                        <path d="M 35 120 L 115 120 L 130 160 C 140 180, 120 190, 75 190 C 30 190, 10 180, 20 160 Z" fill="#FFD4A6" class="animate-pulse"/>
+                        <circle cx="60" cy="170" r="5" fill="#FFF" style="animation: float 2s ease-in-out infinite;"/>
+                        <circle cx="90" cy="150" r="8" fill="#FFF" style="animation: float 3s ease-in-out infinite;"/>
+                        <circle cx="75" cy="130" r="4" fill="#FFF" style="animation: float 1.5s ease-in-out infinite;"/>
+                        <text x="75" y="100" text-anchor="middle" font-size="24" fill="#FFF" class="animate-wiggle-fast">⚠️</text>
+                    </svg>
+                    <h4 class="text-2xl font-black text-pastel-yellow mb-3" data-i18n="mi_villain_title">The Final Boss: Liquid Sodium 🧪</h4>
+                    <p class="font-bold text-slate-300 text-sm leading-relaxed" data-i18n="mi_villain_desc">Burns violently in air. Explodes in water! Taming this metal as a coolant took 22 years and ₹7,700 crore.</p>
+                </div>
+
+                <!-- Card 2: The Fallen -->
+                <div class="cute-card bg-slate-900 border-white p-8 flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <div class="text-7xl mb-6 mt-4 opacity-80">🏳️</div>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-3xl grayscale opacity-60">🇺🇸</span>
+                        <span class="text-3xl grayscale opacity-60">🇩🇪</span>
+                        <span class="text-3xl grayscale opacity-60">🇬🇧</span>
+                    </div>
+                    <h4 class="text-2xl font-black text-pastel-pink mb-3" data-i18n="mi_fallen_title">The Fallen Challengers 🏳️</h4>
+                    <p class="font-bold text-slate-400 text-sm leading-relaxed" data-i18n="mi_fallen_desc">The USA, Germany, and the UK tried to build this fast breeder technology and eventually gave up.</p>
+                </div>
+
+                <!-- Card 3: The Victor -->
+                <div class="cute-card bg-pastel-green border-white p-8 flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <div class="text-7xl mb-6 mt-4 animate-bounce">🏆</div>
+                    <div class="text-4xl font-black text-pastel-dark mb-4">200+</div>
+                    <h4 class="text-2xl font-black text-pastel-dark mb-3" data-i18n="mi_victor_title">The Victor: India 🇮🇳</h4>
+                    <p class="font-bold text-green-900 text-sm leading-relaxed" data-i18n="mi_victor_desc">Built by 200+ Indian companies entirely from scratch with ZERO foreign blueprints.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: THE STRATEGIC MATH ("TRADING CARDS") -->
+    <section class="py-24 px-4 w-full relative z-10 border-b-8 border-pastel-pink">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-block bg-pastel-pink text-pastel-dark font-black px-6 py-2 rounded-full border-4 border-pastel-dark transform -rotate-1 mb-4 shadow-[4px_4px_0px_#1E293B]" data-i18n="sec6_tag">THE NUMBERS</div>
+                <h3 class="text-4xl md:text-6xl font-black text-pastel-dark mb-4" data-i18n="sec6_title">Why This is a Big Deal 📈</h3>
+            </div>
+
+            <!-- THE EQUATION LAYOUT (BENTO BOX) -->
+            <div class="flex flex-col gap-8 md:gap-10">
+                
+                <!-- TIER 1: The Imbalance (2 cols) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Card 1 -->
+                    <div class="cute-card bg-white p-6 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                        <div class="absolute top-0 left-0 w-full bg-pastel-blue border-b-4 border-pastel-dark py-2 text-center font-black uppercase text-sm tracking-widest" data-i18n="card1_banner">Thorium Wealth</div>
+                        <div class="mt-10 flex flex-col items-center flex-grow">
+                            <div class="text-7xl mb-2 group-hover:scale-110 transition-transform">🌍</div>
+                            <div class="text-6xl font-black text-pastel-dark mb-2">25<span class="text-3xl text-slate-400">%</span></div>
+                            <p class="font-bold text-slate-600 text-center mb-6 flex-grow" data-i18n="card1_desc">India's share of world's thorium (Kerala & Odisha sands).</p>
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-slate-200 h-6 rounded-full border-4 border-pastel-dark overflow-hidden relative mt-auto">
+                                <div class="bg-pastel-blue w-1/4 h-full border-r-4 border-pastel-dark absolute left-0 top-0"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="cute-card bg-white p-6 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                        <div class="absolute top-0 left-0 w-full bg-pastel-pink border-b-4 border-pastel-dark py-2 text-center font-black uppercase text-sm tracking-widest text-pastel-dark" data-i18n="card2_banner">Uranium Poverty</div>
+                        <div class="mt-10 flex flex-col items-center flex-grow">
+                            <div class="text-7xl mb-2 group-hover:animate-wiggle">🪣</div>
+                            <div class="text-6xl font-black text-pastel-dark mb-2">1.5<span class="text-3xl text-slate-400">%</span></div>
+                            <p class="font-bold text-slate-600 text-center mb-6 flex-grow" data-i18n="card2_desc">India's tiny share of global Uranium. (This is why we need breeders!)</p>
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-slate-200 h-6 rounded-full border-4 border-pastel-dark overflow-hidden relative mt-auto">
+                                <div class="bg-pastel-pink w-[2%] h-full border-r-4 border-pastel-dark absolute left-0 top-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Bridge 1 -->
+                <div class="flex justify-center -my-4 md:-my-6 relative z-10 reveal">
+                    <div class="bg-white border-4 border-pastel-dark rounded-full p-2 animate-bounce-slow shadow-[4px_4px_0px_#1E293B]">
+                        <svg class="w-8 h-8 text-pastel-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </div>
+                </div>
+
+                <!-- TIER 2: The Effort (3 cols, boxed) -->
+                <div class="bg-pastel-dark/5 p-4 md:p-6 rounded-[2rem] border-4 border-dashed border-pastel-dark/30 reveal">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Card 7 -->
+                        <div class="cute-card bg-white p-5 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                            <div class="absolute top-0 left-0 w-full bg-[#cbd5e1] border-b-4 border-pastel-dark py-1 text-center font-black uppercase text-xs tracking-widest text-pastel-dark" data-i18n="card7_banner">A 72-Year Dream</div>
+                            <div class="mt-8 flex flex-col items-center flex-grow">
+                                <div class="text-5xl mb-2 group-hover:animate-spin-slow">🧠</div>
+                                <div class="text-4xl font-black text-pastel-dark mb-1">72<span class="text-xl text-slate-400"> yrs</span></div>
+                                <p class="font-bold text-slate-600 text-center text-sm flex-grow" data-i18n="card7_desc">Time since Dr. Homi Bhabha originally conceived this 3-stage plan.</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 8 -->
+                        <div class="cute-card bg-white p-5 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                            <div class="absolute top-0 left-0 w-full bg-[#f87171] border-b-4 border-pastel-dark py-1 text-center font-black uppercase text-xs tracking-widest text-white" data-i18n="card8_banner">22 Years of Grit</div>
+                            <div class="mt-8 flex flex-col items-center flex-grow">
+                                <div class="text-5xl mb-2 group-hover:scale-110 transition-transform">🏗️</div>
+                                <div class="text-4xl font-black text-pastel-dark mb-1">22<span class="text-xl text-slate-400"> yrs</span></div>
+                                <p class="font-bold text-slate-600 text-center text-sm flex-grow" data-i18n="card8_desc">Time it took our scientists and engineers to actually build the PFBR.</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 9 -->
+                        <div class="cute-card bg-white p-5 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                            <div class="absolute top-0 left-0 w-full bg-[#34d399] border-b-4 border-pastel-dark py-1 text-center font-black uppercase text-xs tracking-widest text-pastel-dark" data-i18n="card9_banner">The Cost</div>
+                            <div class="mt-8 flex flex-col items-center flex-grow">
+                                <div class="text-5xl mb-2 group-hover:animate-bounce">💰</div>
+                                <div class="text-4xl font-black text-pastel-dark mb-1">₹7.7<span class="text-xl text-slate-400">k Cr</span></div>
+                                <p class="font-bold text-slate-600 text-center text-sm flex-grow" data-i18n="card9_desc">Final cost of the project (started at an initial estimate of ₹3,492 crore).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Bridge 2 -->
+                <div class="flex justify-center -my-4 md:-my-6 relative z-10 reveal">
+                    <div class="bg-pastel-yellow border-4 border-pastel-dark rounded-full p-2 animate-bounce shadow-[4px_4px_0px_#1E293B]">
+                        <svg class="w-8 h-8 text-pastel-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                </div>
+
+                <!-- TIER 3: The Reward (2 cols) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Card 3 -->
+                    <div class="cute-card bg-white p-6 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                        <div class="absolute top-0 left-0 w-full bg-pastel-yellow border-b-4 border-pastel-dark py-2 text-center font-black uppercase text-sm tracking-widest" data-i18n="card3_banner">Massive Potential</div>
+                        <div class="mt-10 flex flex-col items-center flex-grow">
+                            <div class="text-7xl mb-2 group-hover:animate-bounce">⚡</div>
+                            <div class="text-6xl font-black text-pastel-dark mb-2">500<span class="text-3xl text-slate-400">GW</span></div>
+                            <p class="font-bold text-slate-600 text-center mb-6 flex-grow" data-i18n="card3_desc">Power capacity available once Stage 3 is deployed.</p>
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-slate-200 h-6 rounded-full border-4 border-pastel-dark overflow-hidden relative mt-auto">
+                                <div class="bg-pastel-yellow w-[90%] h-full border-r-4 border-pastel-dark absolute left-0 top-0 transition-all duration-1000 group-hover:w-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="cute-card bg-white p-6 reveal interactive group relative overflow-hidden flex flex-col h-full">
+                        <div class="absolute top-0 left-0 w-full bg-pastel-orange border-b-4 border-pastel-dark py-2 text-center font-black uppercase text-sm tracking-widest" data-i18n="card5_banner">The Valuation</div>
+                        <div class="mt-10 flex flex-col items-center flex-grow">
+                            <div class="text-7xl mb-2 group-hover:scale-110 transition-transform">💎</div>
+                            <div class="text-6xl font-black text-pastel-dark mb-2">$4.8<span class="text-3xl text-slate-400">T</span></div>
+                            <p class="font-bold text-slate-600 text-center mb-6 flex-grow" data-i18n="card5_desc">The energy equivalent value of India's Thorium reserves.</p>
+                            <div class="w-full bg-slate-200 h-6 rounded-full border-4 border-pastel-dark overflow-hidden relative mt-auto">
+                                <div class="bg-pastel-orange w-full h-full absolute left-0 top-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TIER 4: The Finale (2 cols, super-sized) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+                    <!-- Card 4 -->
+                    <div class="cute-card bg-white p-8 reveal interactive group relative overflow-hidden flex flex-col h-full border-8 shadow-[12px_12px_0px_#1E293B]">
+                        <div class="absolute top-0 left-0 w-full bg-pastel-green border-b-8 border-pastel-dark py-3 text-center font-black uppercase text-base tracking-widest" data-i18n="card4_banner">Generations of Power</div>
+                        <div class="mt-12 flex flex-col items-center flex-grow">
+                            <div class="text-8xl mb-4 group-hover:rotate-180 transition-transform duration-1000">⏳</div>
+                            <div class="text-7xl font-black text-pastel-dark mb-4">400<span class="text-4xl text-slate-400">+ yrs</span></div>
+                            <p class="font-bold text-slate-600 text-center text-lg mb-8 flex-grow" data-i18n="card4_desc">How long India's thorium could power the entire nation.</p>
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-slate-200 h-8 rounded-full border-4 border-pastel-dark overflow-hidden relative mt-auto">
+                                <div class="bg-pastel-green w-full h-full absolute left-0 top-0">
+                                    <div class="w-full h-full pipe-pattern"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="cute-card bg-white p-8 reveal interactive group relative overflow-hidden flex flex-col h-full border-8 shadow-[12px_12px_0px_#1E293B]">
+                        <div class="absolute top-0 left-0 w-full bg-pastel-purple border-b-8 border-pastel-dark py-3 text-center font-black uppercase text-base tracking-widest" data-i18n="card6_banner">Total Sovereignty</div>
+                        <div class="mt-12 flex flex-col items-center flex-grow">
+                            <div class="text-8xl mb-4 group-hover:animate-wiggle">🛡️</div>
+                            <div class="text-7xl font-black text-pastel-dark mb-4">100<span class="text-4xl text-slate-400">%</span></div>
+                            <p class="font-bold text-slate-600 text-center text-lg mb-8 flex-grow" data-i18n="card6_desc">Zero dependence on imported oil. India cannot be blackmailed for energy.</p>
+                            <div class="w-full bg-slate-200 h-8 rounded-full border-4 border-pastel-dark overflow-hidden relative mt-auto">
+                                <div class="bg-pastel-purple w-full h-full absolute left-0 top-0">
+                                    <div class="w-full h-full pipe-pattern"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: HOMI BHABHA TRIBUTE -->
+    <section class="py-20 px-4 w-full relative z-10 reveal bg-slate-900 text-white overflow-hidden border-b-8 border-white">
+        <!-- Starry background -->
+        <div class="absolute inset-0 opacity-50" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-black mb-6 text-pastel-yellow" data-i18n="trib_title">A Promise Kept 🕊️</h2>
+            <p class="text-lg md:text-xl font-bold mb-6 max-w-2xl mx-auto leading-relaxed text-slate-300" data-i18n="trib_desc">
+                Homi Bhabha drafted this 3-stage plan 72 years ago. He died in a tragic plane crash at age 56, never living to see Stage 2. Last night, 60 years after his death, his dream finally came to life.
+            </p>
+            <div class="inline-block bg-white/10 text-white font-black px-6 py-2 rounded-full border-4 border-white/20 backdrop-blur-sm" data-i18n="trib_tag">History doesn't forget its visionaries. India didn't forget either. 🇮🇳</div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: COMICAL FOOTER -->
+    <footer id="footer-section" class="pt-24 pb-48 md:pb-32 bg-pastel-dark text-white text-center relative overflow-hidden">
+        
+        <!-- JS Wandering Atom Pet -->
+        <div id="wandering-atom" class="absolute top-1/2 left-1/2 w-16 h-16 pointer-events-none z-0">
+            <svg class="w-full h-full" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="10" fill="#FFA6C9" stroke="#FFF" stroke-width="4" />
+                <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="#A6D4FF" stroke-width="4" transform="rotate(45 50 50)" class="animate-spin-slow" />
+                <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="#A6FFAF" stroke-width="4" transform="rotate(-45 50 50)" class="animate-spin-slow" style="animation-direction: reverse;" />
+                <path d="M 70 30 Q 75 20 80 30 Q 75 40 70 30" fill="#A6D4FF" class="animate-pulse" />
+            </svg>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 flex flex-col items-center relative z-10">
+            
+            <h2 class="text-2xl font-black mb-10 text-pastel-yellow transform -rotate-1" data-i18n="footer_title">Powered by curiosity (and some atoms) ⚛️</h2>
+
+            <!-- Custom Cute Branding Section -->
+            <div class="cute-card bg-white text-pastel-dark inline-flex flex-col items-center py-6 px-10 border-4 border-pastel-dark transform rotate-1 hover:rotate-0 mb-8 shadow-[8px_8px_0px_#FFA6C9]">
+                <div class="text-lg font-bold mb-4 text-center" data-i18n="footer_curated">
+                    <span class="block text-sm md:text-base mb-1">Curated & Designed by</span>
+                    <span class="font-black text-2xl text-pastel-pink underline decoration-4 underline-offset-4 inline-block">Hari Pravin</span> 🎨
+                </div>
+                
+                <div class="flex gap-4 mb-6">
+                    <!-- Beacons.ai -->
+                    <a href="https://beacons.ai/haripravin" target="_blank" rel="noopener noreferrer" class="hover:scale-125 hover:-rotate-6 transition-transform" aria-label="Beacons">
+                        <svg class="w-10 h-10 fill-pastel-dark" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                        </svg>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/haripravin/" target="_blank" rel="noopener noreferrer" class="hover:scale-125 hover:rotate-6 transition-transform" aria-label="LinkedIn">
+                        <svg class="w-10 h-10 fill-[#0a66c2]" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/hariij" target="_blank" rel="noopener noreferrer" class="hover:scale-125 hover:-rotate-6 transition-transform" aria-label="Facebook">
+                        <svg class="w-10 h-10 fill-[#1877f2]" viewBox="0 0 24 24">
+                            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Chai4Me Widget -->
+                <a href="https://chai4.me/hari" target="_blank" title="Support hari on Chai4Me" style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;background:#ffffff;padding:16px 32px;border-radius:16px;text-decoration:none;border:3px solid #1E293B;box-shadow:4px 4px 0px #1E293B;transition:transform 0.2s;" class="hover:-translate-y-1 hover:shadow-[6px_6px_0px_#1E293B]">
+                    <img src="https://chai4.me/icons/wordmark.png" alt="Chai4Me" style="height:32px;object-fit:contain;margin-bottom:12px;"/>
+                    <span style="color:#1E293B;font-family:sans-serif;font-size:14px;font-weight:900;text-align:center;line-height:1.5;" data-i18n="footer_chai_long">If you enjoy my work or feel it is useful,<br/>click this card and support my work with a tea ☕</span>
+                </a>
+            </div>
+
+            <!-- Visitor Counter -->
+            <div class="flex flex-col items-center mt-2 mb-6 z-10">
+                <p class="text-xs font-black text-pastel-yellow mb-2 tracking-widest uppercase" data-i18n="footer_views">Curious Minds Reached</p>
+                <div class="bg-white border-4 border-pastel-dark rounded-xl overflow-hidden shadow-[4px_4px_0px_#1E293B] transform -rotate-1 hover:rotate-1 transition-transform">
+                    <img src="https://api.visitorbadge.io/api/visitors?path=india_magic_reactor&label=VIEWS&labelColor=%231E293B&countColor=%23FFA6C9" alt="Views" class="h-8" />
+                </div>
+            </div>
+
+            <!-- Stylized Stamps -->
+            <div class="flex flex-wrap justify-center gap-4 mt-8">
+                <div class="bg-pastel-blue text-pastel-dark font-black px-4 py-2 border-2 border-dashed border-pastel-dark transform -rotate-3" data-i18n="stamp_kalpakkam">📍 Kalpakkam, TN</div>
+                <div class="bg-pastel-green text-pastel-dark font-black px-4 py-2 border-2 border-dashed border-pastel-dark transform rotate-2" data-i18n="stamp_igcar">🏢 IGCAR + BHAVINI</div>
+                <div class="bg-pastel-pink text-pastel-dark font-black px-4 py-2 border-2 border-dashed border-pastel-dark transform -rotate-1" data-i18n="stamp_dae">🇮🇳 Dept of Atomic Energy</div>
+                <div class="bg-pastel-purple text-white font-black px-4 py-2 border-2 border-dashed border-white transform rotate-3" data-i18n="stamp_chennai">❤️ With Love from Chennai</div>
+                <div class="bg-pastel-yellow text-pastel-dark font-black px-4 py-2 border-2 border-dashed border-pastel-dark transform -rotate-2" data-i18n="stamp_makeinindia">🦁 Make in India</div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // 1. FOREVER SCROLL REVEAL (Intersection Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+
+        // 2. TIMELINE EXPAND LOGIC
+        function toggleTL(element) {
+            const content = element.querySelector('.tl-content');
+            const btn = element.querySelector('.tl-btn');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                btn.innerText = currentLang === 'en' ? 'Close ▴' : (currentLang === 'ta' ? 'மூடு ▴' : 'Close ▴');
+                element.classList.add('shadow-[10px_10px_0px_#1E293B]', '-translate-y-1', '-translate-x-1');
+            } else {
+                content.classList.add('hidden');
+                btn.innerText = currentLang === 'en' ? 'Read More ▾' : (currentLang === 'ta' ? 'மேலும் படிக்க ▾' : 'Read More ▾');
+                element.classList.remove('shadow-[10px_10px_0px_#1E293B]', '-translate-y-1', '-translate-x-1');
+            }
+        }
+
+        // 3. WANDERING FOOTER ATOM
+        document.addEventListener('DOMContentLoaded', () => {
+            const atom = document.getElementById('wandering-atom');
+            const footer = document.getElementById('footer-section');
+            if(!atom || !footer) return;
+
+            function moveAtom() {
+                const maxX = footer.clientWidth - 100;
+                const maxY = footer.clientHeight - 100;
+                
+                const randomX = Math.max(0, Math.floor(Math.random() * maxX)) - (footer.clientWidth/2 - 50);
+                const randomY = Math.max(0, Math.floor(Math.random() * maxY)) - (footer.clientHeight/2 - 50);
+                
+                atom.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+
+            setInterval(moveAtom, 3000);
+            moveAtom();
+        });
+
+        // 4. LOCALIZATION (ENGLISH / TAMIL)
+        let currentLang = 'en';
+        
+        const i18n = {
+            en: {
+                "tag_1": "⚛️ 500 MWe Power",
+                "tag_2": "🇮🇳 100% Indigenous",
+                "tag_3": "🌟 2nd Nation After Russia",
+                "hero_location": "📍 KALPAKKAM, INDIA • APRIL 2026",
+                "hero_title_1": "India's Magic",
+                "hero_title_2": "Nuclear Reactor!",
+                "hero_desc_1": "A 70-year dream comes true. India successfully achieves criticality in the ",
+                "hero_desc_2": "Fast Breeder Reactor",
+                "hero_desc_3": ".",
+                
+                "sec2_tag": "THE STORY 💡",
+                "sec2_title": "The \"Magic Pot\" of Energy",
+                "sec2_desc_1": "You might have heard about the <span class=\"bg-pastel-orange px-2 border-2 border-pastel-dark rounded\">Akshaya Patra</span> in childhood stories from your grandma—a magical vessel in Hindu mythology that never, ever runs out of food.",
+                "sec2_desc_2": "Well, the Fast Breeder Reactor is exactly that, but for electricity! It acts like a magical loop. It actually produces <strong>more nuclear fuel than it eats.</strong> It burns Plutonium, and uses a blanket of Thorium sand to magically &quot;breed&quot; brand new Uranium fuel. It is a never-ending cycle that could power us for centuries!",
+                
+                "sec2_5_title": "Wait... A Magic Car? 🚗✨",
+                "sec2_5_desc": "Still sounds complicated? Imagine driving a car that actually <strong>fills up its own petrol tank</strong> as you drive it down the road! That's exactly what a Fast Breeder Reactor does. It &quot;breeds&quot; more fuel than it consumes.",
+                
+                "sec3_title": "Homi Bhabha's Master Plan",
+                "sec3_sub": "A multi-generational engineering loop where the waste of one reactor becomes the precious fuel for the next.",
+                "stg1_badge": "STAGE 1: DONE ✅",
+                "stg1_title": "Heavy Water Reactors",
+                "stg1_desc": "India built these first. They use naturally occurring, un-enriched Uranium. While they generate electricity, their most important job is creating a specific byproduct in their spent fuel.",
+                "lbl_input": "Input",
+                "lbl_output": "Output",
+                "stg1_in": "Natural Uranium",
+                "stg1_out": "Plutonium (Pu-239)",
+                "stg2_badge": "STAGE 2: NOW LIVE ✨",
+                "stg2_title": "Fast Breeder Reactors",
+                "stg2_desc": "The PFBR burns the Plutonium from Stage 1. But here's the trick: we surround the core with a \"blanket\" of Thorium sand. The fast neutrons hit the Thorium and transform it into brand new nuclear fuel!",
+                "stg2_in1": "Plutonium",
+                "stg2_in2": "Thorium Sand",
+                "stg2_out": "U-233 Fuel",
+                "stg3_badge": "STAGE 3: THE FUTURE 🚀",
+                "stg3_title": "Thorium Reactors",
+                "stg3_desc": "The ultimate goal. These future reactors will burn the U-233 created in Stage 2 alongside more Thorium. This creates an infinite, self-sustaining loop that provides centuries of clean power from India's own soil.",
+                "stg3_loop_lbl": "The Magic Loop",
+                "stg3_out": "Infinite Energy!",
+                "stg3_sub": "U-233 + Thorium Cycle",
+                
+                "sec3_5_title": "The Waste-Eating Monster 👾",
+                "sec3_5_desc_1": "\"But what about nuclear waste?!\" you might ask. Fast Breeder Reactors actually <strong>EAT</strong> the radioactive waste from Stage 1 reactors!",
+                "sec3_5_desc_2": "Spent fuel from normal reactors remains dangerously radioactive for 10,000 years. The PFBR burns that waste down into material that is safe in just 300 years. India isn't just making clean energy—it's cleaning up old nuclear waste while doing it.",
+                "sec3_5_tag": "Not a problem. A SOLUTION. ✅",
+
+                "sec4_title": "70 Years in the Making ⏳",
+                "sec4_sub": "The complete history. Tap \"Read More\" on any card to uncover the deep details.",
+                "tl1_title": "Homi Bhabha's grand vision",
+                "tl1_desc": "Dr Homi J. Bhabha drafts India's ambitious three-stage nuclear programme — engineered around one hard truth: India has almost no uranium, but enormous thorium reserves. The plan: use what little uranium exists to breed plutonium, then use plutonium to unlock thorium.",
+                "tl2_title": "Design work begins at IGCAR",
+                "tl2_desc": "The Indira Gandhi Centre for Atomic Research (IGCAR) in Kalpakkam begins designing the Prototype Fast Breeder Reactor. This is entirely indigenous — no foreign blueprint, no technology transfer.",
+                "tl3_title": "Construction begins at Kalpakkam",
+                "tl3_desc": "BHAVINI breaks ground. The target: go operational by 2010. The reactor is cooled by liquid sodium — a highly reactive metal that burns on contact with air or water — making engineering extremely demanding.",
+                "tl4_title": "Over a decade of delays",
+                "tl4_desc": "First-of-a-kind technology hurdles cause repeated setbacks. The PFBR is unlike anything India had built before. Each technical challenge is solved from scratch — yielding invaluable knowledge but pushing timelines by 13+ years.",
+                "tl5_title": "PM Modi visits — core loading",
+                "tl5_desc": "Prime Minister Modi visits Kalpakkam to witness the initiation of core loading — the first stage of fuelling the reactor. A milestone moment broadcast nationally, signalling that the long wait is nearly over.",
+                "tl6_title": "Regulatory clearance granted",
+                "tl6_desc": "India's Atomic Energy Regulatory Board (AERB) grants permission for the First Approach to Criticality — authorising loading of fuel into the reactor core and the start of low-power physics experiments.",
+                "tl7_title": "Final fuel loading commences",
+                "tl7_desc": "After resolving new technical issues and receiving fresh AERB clearance, full-scale fuel loading begins. 1,750 tonnes of liquid sodium coolant surround the core as engineers prepare for the pivotal moment.",
+                "tl8_title": "First criticality achieved!",
+                "tl8_subtitle": "A self-sustaining chain reaction ignites inside the PFBR.",
+                "tl8_desc": "India officially enters Stage 2 of Homi Bhabha's three-stage plan. PM Modi calls it \"a proud moment for India\" and \"a defining step.\" India becomes only the second country after Russia to achieve this monumental feat.",
+                "tl9_title": "Commercial power begins",
+                "tl9_desc": "After staged power ascension, safety testing and AERB grid approval, the reactor connects to India's power grid — delivering 500 MW of clean electricity. Commercial operations mark the true start of Stage 2.",
+                "tl10_title": "Six more FBRs follow",
+                "tl10_desc": "Two more fast breeder reactors are planned at Kalpakkam once the PFBR proves stable. Then four FBR-600 commercial reactors at new sites across India — multiplying fissile material and paving the way for Stage 3.",
+                "btn_readmore": "Read More ▾",
+                
+                "sec4_5_tag": "ENGINEERING MARVEL 🛠️",
+                "sec4_5_title": "Mission Impossible",
+                "sec4_5_desc_1": "Building the PFBR was terrifyingly complex. It is cooled by <strong class=\"text-pastel-yellow\">Liquid Sodium</strong>. Sodium burns violently on contact with air, and explodes on contact with water! Giving a 500 MW reactor passive safety systems with this metal is an insane feat of engineering.",
+                "mi_villain_title": "The Final Boss: Liquid Sodium 🧪",
+                "mi_villain_desc": "Burns violently in air. Explodes in water! Taming this metal as a coolant took 22 years and ₹7,700 crore.",
+                "mi_fallen_title": "The Fallen Challengers 🏳️",
+                "mi_fallen_desc": "The USA, Germany, and the UK tried to build this fast breeder technology and eventually gave up.",
+                "mi_victor_title": "The Victor: India 🇮🇳",
+                "mi_victor_desc": "Built by 200+ Indian companies entirely from scratch with ZERO foreign blueprints.",
+
+                "sec6_tag": "THE NUMBERS",
+                "sec6_title": "Why This is a Big Deal 📈",
+                "card1_banner": "Thorium Wealth",
+                "card1_desc": "India's share of world's thorium (Kerala & Odisha sands).",
+                "card2_banner": "Uranium Poverty",
+                "card2_desc": "India's tiny share of global Uranium. (This is why we need breeders!)",
+                "card3_banner": "Massive Potential",
+                "card3_desc": "Power capacity available once Stage 3 is deployed.",
+                "card4_banner": "Generations of Power",
+                "card4_desc": "How long India's thorium could power the entire nation.",
+                "card5_banner": "The Valuation",
+                "card5_desc": "The energy equivalent value of India's Thorium reserves.",
+                "card6_banner": "Total Sovereignty",
+                "card6_desc": "Zero dependence on imported oil. India cannot be blackmailed for energy.",
+                "card7_banner": "A 72-Year Dream",
+                "card7_desc": "72 years: Time since Dr. Homi Bhabha originally conceived this 3-stage plan.",
+                "card8_banner": "22 Years of Grit",
+                "card8_desc": "22 years: Time it took our scientists and engineers to actually build the PFBR.",
+                "card9_banner": "The Cost",
+                "card9_desc": "₹7,700 crore: Final cost of the project (started at an initial estimate of ₹3,492 crore).",
+                
+                "trib_title": "A Promise Kept 🕊️",
+                "trib_desc": "Homi Bhabha drafted this 3-stage plan 72 years ago. He died in a tragic plane crash at age 56, never living to see Stage 2. Last night, 60 years after his death, his dream finally came to life.",
+                "trib_tag": "History doesn't forget its visionaries. India didn't forget either. 🇮🇳",
+
+                "footer_title": "Powered by curiosity (and some atoms) ⚛️",
+                "footer_curated": "<span class=\"block text-sm md:text-base mb-1\">Curated & Designed by</span><span class=\"font-black text-2xl text-pastel-pink underline decoration-4 underline-offset-4 inline-block\">Hari Pravin</span> 🎨",
+                "float_chai_short": "Enjoying?<br/>Support with a tea ☕",
+                "footer_chai_long": "If you enjoy my work or feel it is useful,<br/>click this card and support my work with a tea ☕",
+                "footer_views": "Curious Minds Reached",
+                "stamp_kalpakkam": "📍 Kalpakkam, TN",
+                "stamp_igcar": "🏢 IGCAR + BHAVINI",
+                "stamp_dae": "🇮🇳 Dept of Atomic Energy",
+                "stamp_chennai": "❤️ With Love from Chennai",
+                "stamp_makeinindia": "🦁 Make in India"
+            },
+            ta: {
+                "tag_1": "⚛️ 500 MWe மின்சாரம்",
+                "tag_2": "🇮🇳 100% உள்நாட்டுத் தயாரிப்பு",
+                "tag_3": "🌟 ரஷ்யாவிற்குப் பிறகு 2வது நாடு",
+                "hero_location": "📍 கல்பாக்கம், இந்தியா • ஏப்ரல் 2026",
+                "hero_title_1": "இந்தியாவின் மேஜிக்",
+                "hero_title_2": "அணு உலை!",
+                "hero_desc_1": "70 வருட கனவு நனவாகிறது. இந்தியா வெற்றிகரமாக ",
+                "hero_desc_2": "ஃபாஸ்ட் ப்ரீடர் ரியாக்டரில் (PFBR)",
+                "hero_desc_3": " 'கிரிட்டிகாலிட்டி' (Criticality) அடைந்தது.",
+                
+                "sec2_tag": "ஒரு குட்டிக் கதை 💡",
+                "sec2_title": "ஆற்றலின் \"மந்திரப் பானை\"",
+                "sec2_desc_1": "உங்கள் பாட்டி சொன்ன சிறுவயது கதைகளில் <span class=\"bg-pastel-orange px-2 border-2 border-pastel-dark rounded\">அட்சய பாத்திரம்</span> பற்றி கேள்விப்பட்டிருப்பீர்கள்—எவ்வளவு எடுத்தாலும் உணவு குறையாத ஒரு மந்திரப் பாத்திரம்.",
+                "sec2_desc_2": "ஃபாஸ்ட் ப்ரீடர் ரியாக்டர் (Fast Breeder Reactor) என்பதும் அதேதான், ஆனால் இது மின்சாரத்திற்கான அட்சய பாத்திரம்! இது சாப்பிடும் எரிபொருளை விட <strong>அதிகமான எரிபொருளை உருவாக்குகிறது.</strong> புளூட்டோனியத்தை எரித்து, தோரியம் மணலைப் பயன்படுத்தி புதிய யுரேனியம் எரிபொருளை &quot;உருவாக்குகிறது&quot;. இது முடிவில்லாத ஒரு மந்திரச் சுழற்சி!",
+                
+                "sec2_5_title": "அது என்ன... மந்திர கார்? 🚗✨",
+                "sec2_5_desc": "இன்னும் கொஞ்சம் குழப்பமா இருக்கா? நீங்கள் ஓட்ட ஓட்ட தானாகவே <strong>பெட்ரோல் நிரம்பும் ஒரு காரை</strong> கற்பனை செய்து பாருங்கள்! அதைத்தான் ஃபாஸ்ட் ப்ரீடர் ரியாக்டர் செய்கிறது. இது எரிபொருளை எரிப்பதை விட அதிகமாக &quot;உருவாக்குகிறது&quot;.",
+
+                "sec3_title": "ஹோமி பாபாவின் மாஸ்டர் பிளான்",
+                "sec3_sub": "ஒரு உலையின் கழிவு, அடுத்த உலைக்கு மதிப்புமிக்க எரிபொருளாக மாறும் ஒரு அற்புதமான பொறியியல் சுழற்சி.",
+                "stg1_badge": "கட்டம் 1: முடிந்தது ✅",
+                "stg1_title": "கனநீர் உலைகள் (PHWR)",
+                "stg1_desc": "இந்தியா முதலில் இவற்றை உருவாக்கியது. இவை இயற்கையான யுரேனியத்தைப் பயன்படுத்துகின்றன. இவை மின்சாரத்தை உருவாக்கினாலும், இவற்றின் மிக முக்கியமான வேலை கழிவுகளில் 'புளூட்டோனியம்' என்ற பொருளை உருவாக்குவதே ஆகும்.",
+                "lbl_input": "உள்ளீடு",
+                "lbl_output": "வெளியீடு",
+                "stg1_in": "இயற்கை யுரேனியம்",
+                "stg1_out": "புளூட்டோனியம்",
+                "stg2_badge": "கட்டம் 2: இப்போது செயல்படுகிறது ✨",
+                "stg2_title": "ஃபாஸ்ட் ப்ரீடர் உலைகள்",
+                "stg2_desc": "PFBR முதல் கட்டத்திலிருந்து வரும் புளூட்டோனியத்தை எரிக்கிறது. இதில் ஒரு சுவாரஸ்யம்: மையத்தைச் சுற்றி தோரியம் மணலால் ஒரு 'போர்வை' அமைக்கப்படுகிறது. நியூட்ரான்கள் தோரியத்தை புதிய அணுக்கரு எரிபொருளாக மாற்றுகின்றன!",
+                "stg2_in1": "புளூட்டோனியம்",
+                "stg2_in2": "தோரியம் மணல்",
+                "stg2_out": "U-233 எரிபொருள்",
+                "stg3_badge": "கட்டம் 3: எதிர்காலம் 🚀",
+                "stg3_title": "தோரியம் உலைகள்",
+                "stg3_desc": "இதுவே இறுதி இலக்கு. இந்த எதிர்கால உலைகள் 2ம் கட்டத்தில் உருவாக்கப்பட்ட U-233 ஐ மேலும் தோரியத்துடன் சேர்த்து எரிக்கும். இது பல நூற்றாண்டுகளுக்கு தூய்மையான சக்தியை வழங்கும் ஒரு முடிவில்லாத சுழற்சியை உருவாக்குகிறது.",
+                "stg3_loop_lbl": "மந்திரச் சுழற்சி",
+                "stg3_out": "முடிவில்லா மின்சாரம்!",
+                "stg3_sub": "U-233 + தோரியம் சுழற்சி",
+                
+                "sec3_5_title": "கழிவுகளை உண்ணும் அரக்கன் 👾",
+                "sec3_5_desc_1": "\"அணுக்கழிவு பற்றி என்ன செய்வது?!\" என்று நீங்கள் கேட்கலாம். ஃபாஸ்ட் ப்ரீடர் உலைகள் உண்மையில் முதல் கட்ட உலைகளின் ஆபத்தான கழிவுகளை <strong>சாப்பிடுகின்றன!</strong>",
+                "sec3_5_desc_2": "பழைய உலைகளின் கழிவுகள் 10,000 வருடங்கள் கதிர்வீச்சுடன் இருக்கும். PFBR அந்த கழிவுகளை எரித்து, வெறும் 300 வருடங்களில் பாதுகாப்பானதாக மாற்றுகிறது. இந்தியா மின்சாரம் தயாரிப்பது மட்டுமல்லாமல், பழைய அணுக்கழிவுகளையும் சுத்தப்படுத்துகிறது.",
+                "sec3_5_tag": "இது பிரச்சனை இல்லை. ஒரு தீர்வு. ✅",
+
+                "sec4_title": "70 வருட சரித்திரம் ⏳",
+                "sec4_sub": "முழுமையான வரலாறு. விரிவான தகவல்களை அறிய கார்டுகளைத் தொடவும்.",
+                "tl1_title": "ஹோமி பாபாவின் தொலைநோக்கு",
+                "tl1_desc": "டாக்டர் ஹோமி ஜே. பாபா இந்தியாவின் லட்சியமான மூன்று-கட்ட அணுசக்தி திட்டத்தை வரைகிறார். இந்தியாவிற்கு யுரேனியம் இல்லை, ஆனால் மகத்தான தோரியம் இருப்பு உள்ளது என்பதே இதன் அடிப்படை. திட்டம்: இருக்கும் சிறிதளவு யுரேனியத்தைப் பயன்படுத்தி புளூட்டோனியத்தை உருவாக்கி, பின் தோரியத்தை திறப்பது.",
+                "tl2_title": "IGCAR-இல் வடிவமைப்பு தொடக்கம்",
+                "tl2_desc": "கல்பாக்கத்தில் உள்ள IGCAR, ஃபாஸ்ட் ப்ரீடர் ரியாக்டரை வடிவமைக்கத் தொடங்குகிறது. இது முற்றிலும் உள்நாட்டுத் தொழில்நுட்பம் — வெளிநாட்டு வரைபடமோ, தொழில்நுட்ப பரிமாற்றமோ இல்லை.",
+                "tl3_title": "கல்பாக்கத்தில் கட்டுமானம் தொடக்கம்",
+                "tl3_desc": "பவினி (BHAVINI) கட்டுமானத்தைத் தொடங்குகிறது. 2010க்குள் முடிப்பதே இலக்கு. இந்த உலை திரவ சோடியத்தால் குளிர்விக்கப்படுகிறது. சோடியம் காற்று அல்லது நீருடன் பட்டால் எரியும் தன்மை கொண்டது என்பதால் இது மிகவும் சவாலானது.",
+                "tl4_title": "ஒரு தசாப்தத்திற்கும் மேலான தாமதம்",
+                "tl4_desc": "இந்தியா இதுவரை கட்டியிராத புதிய தொழில்நுட்பம் என்பதால் பல சவால்கள். ஒவ்வொரு தொழில்நுட்ப சிக்கலும் புதிதாக தீர்க்கப்படுகிறது — இதனால் விலைமதிப்பற்ற அறிவு கிடைத்தாலும், திட்டம் 13 வருடங்களுக்கு மேல் தாமதமாகிறது.",
+                "tl5_title": "பிரதமர் மோடியின் வருகை",
+                "tl5_desc": "கல்பாக்கம் சென்ற பிரதமர் மோடி, உலையில் எரிபொருள் நிரப்பும் முதல் கட்டத்தை நேரில் பார்வையிட்டார். நீண்ட காத்திருப்பு முடிவுக்கு வரப்போகிறது என்பதை உணர்த்தும் ஒரு மைல்கல் தருணம்.",
+                "tl6_title": "ஒழுங்குமுறை அனுமதி கிடைத்தது",
+                "tl6_desc": "இந்தியாவின் அணுசக்தி ஒழுங்குமுறை வாரியம் (AERB) உலைக்குள் எரிபொருளை ஏற்றுவதற்கும், குறைந்த சக்தி இயற்பியல் சோதனைகளைத் தொடங்குவதற்கும் அனுமதி அளிக்கிறது.",
+                "tl7_title": "இறுதி எரிபொருள் நிரப்புதல்",
+                "tl7_desc": "புதிய தொழில்நுட்ப சிக்கல்களைத் தீர்த்து, புதிய AERB அனுமதியைப் பெற்ற பிறகு, முழு அளவிலான எரிபொருள் நிரப்புதல் தொடங்குகிறது. 1,750 டன் திரவ சோடியம் உலையைச் சூழ்ந்துள்ளது.",
+                "tl8_title": "முதல் 'கிரிட்டிகாலிட்டி' (Criticality) வெற்றி!",
+                "tl8_subtitle": "PFBR-க்குள் ஒரு சுய-நிலையான தொடர் வினை (Chain Reaction) தொடங்குகிறது.",
+                "tl8_desc": "ஹோமி பாபாவின் திட்டத்தின் 2வது கட்டத்திற்குள் இந்தியா அதிகாரப்பூர்வமாக நுழைகிறது. பிரதமர் மோடி இதை 'இந்தியாவிற்கு ஒரு பெருமையான தருணம்' என்று அழைக்கிறார். ரஷ்யாவிற்குப் பிறகு இதைச் சாதிக்கும் 2வது நாடு இந்தியா.",
+                "tl9_title": "வணிக ரீதியான மின் உற்பத்தி",
+                "tl9_desc": "பாதுகாப்பு சோதனைகள் மற்றும் AERB கிரிட் ஒப்புதலுக்குப் பிறகு, உலை இந்தியாவின் மின்கட்டமைப்புடன் இணைகிறது — 500 MW தூய்மையான மின்சாரத்தை வழங்குகிறது.",
+                "tl10_title": "மேலும் ஆறு உலைகள் (FBR)",
+                "tl10_desc": "PFBR சீராக இயங்கியவுடன் கல்பாக்கத்தில் மேலும் இரண்டு ஃபாஸ்ட் ப்ரீடர் உலைகள் திட்டமிடப்பட்டுள்ளன. பின்னர் இந்தியா முழுவதும் புதிய தளங்களில் நான்கு FBR-600 உலைகள் — 3வது கட்டத்திற்கு வழி வகுக்கும்.",
+                "btn_readmore": "மேலும் படிக்க ▾",
+                
+                "sec4_5_tag": "பொறியியல் அற்புதம் 🛠️",
+                "sec4_5_title": "சாத்தியமில்லாத சாதனை",
+                "sec4_5_desc_1": "PFBR-ஐ உருவாக்குவது மிகவும் சவாலானது. இது <strong class=\"text-pastel-yellow\">திரவ சோடியத்தால்</strong> குளிர்விக்கப்படுகிறது. சோடியம் காற்றில் பட்டால் எரியும், தண்ணீரில் பட்டால் வெடிக்கும்! இந்த உலோகத்தை வைத்து 500 MW உலைக்கு பாதுகாப்பான அமைப்புகளை உருவாக்குவது ஒரு பொறியியல் அற்புதம்.",
+                "mi_villain_title": "இறுதி சவால்: திரவ சோடியம் 🧪",
+                "mi_villain_desc": "காற்றில் எரியும். தண்ணீரில் வெடிக்கும்! இந்த உலோகத்தை குளிர்விப்பானாக மாற்ற 22 ஆண்டுகள் மற்றும் ₹7,700 கோடி தேவைப்பட்டது.",
+                "mi_fallen_title": "தோல்வியடைந்த சவாலாளர்கள் 🏳️",
+                "mi_fallen_desc": "அமெரிக்கா, ஜெர்மனி மற்றும் இங்கிலாந்து இந்த தொழில்நுட்பத்தை உருவாக்க முயன்று இறுதியில் கைவிட்டன.",
+                "mi_victor_title": "வெற்றியாளர்: இந்தியா 🇮🇳",
+                "mi_victor_desc": "200+ இந்திய நிறுவனங்களால் பூஜ்ஜிய வெளிநாட்டு வரைபடங்களுடன் முற்றிலும் புதிதாக உருவாக்கப்பட்டது.",
+
+                "sec6_tag": "முக்கிய எண்கள்",
+                "sec6_title": "ஏன் இது ஒரு மாபெரும் சாதனை? 📈",
+                "card1_banner": "தோரியம் செல்வம்",
+                "card1_desc": "உலகின் தோரியம் இருப்பில் இந்தியாவின் பங்கு (கேரளா மற்றும் ஒடிசா மணல்).",
+                "card2_banner": "யுரேனியம் பற்றாக்குறை",
+                "card2_desc": "உலகளாவிய யுரேனியத்தில் இந்தியாவின் மிகச் சிறிய பங்கு. (இதனால்தான் நமக்கு Breeder தேவை!)",
+                "card3_banner": "மாபெரும் திறன்",
+                "card3_desc": "கட்டம் 3 செயல்படத் தொடங்கும் போது கிடைக்கக்கூடிய மின்சாரத் திறன்.",
+                "card4_banner": "தலைமுறைகளுக்கான மின்சாரம்",
+                "card4_desc": "இந்தியாவின் தோரியம் முழு தேசத்தின் மின்தேவையை எத்தனை ஆண்டுகள் பூர்த்தி செய்யும்.",
+                "card5_banner": "எரிசக்தி மதிப்பு",
+                "card5_desc": "இந்தியாவின் தோரியம் இருப்பின் கணக்கிடப்பட்ட எரிசக்தி மதிப்பு.",
+                "card6_banner": "முழுமையான இறையாண்மை",
+                "card6_desc": "இறக்குமதி செய்யப்படும் எண்ணெயை சார்ந்திராத நிலை. எரிசக்திக்காக இந்தியாவை யாரும் மிரட்ட முடியாது.",
+                "card7_banner": "72 வருட கனவு",
+                "card7_desc": "72 ஆண்டுகள்: டாக்டர் ஹோமி பாபா இந்த 3-கட்ட திட்டத்தை முதலில் கற்பனை செய்ததில் இருந்து.",
+                "card8_banner": "22 வருட உழைப்பு",
+                "card8_desc": "22 ஆண்டுகள்: PFBR-ஐ உருவாக்க நமது விஞ்ஞானிகள் மற்றும் பொறியாளர்களுக்கு எடுத்த காலம்.",
+                "card9_banner": "திட்டச் செலவு",
+                "card9_desc": "₹7,700 கோடி: திட்டத்தின் இறுதிச் செலவு (ஆரம்ப மதிப்பீடு ₹3,492 கோடி).",
+                
+                "trib_title": "காப்பாற்றப்பட்ட வாக்குறுதி 🕊️",
+                "trib_desc": "ஹோமி பாபா 72 ஆண்டுகளுக்கு முன் இந்த 3-கட்ட திட்டத்தை வரைந்தார். 56 வயதில் விமான விபத்தில் காலமான அவர், 2வது கட்டத்தை பார்க்காமலேயே மறைந்தார். நேற்றிரவு, அவரது மரணத்திற்கு 60 ஆண்டுகளுக்குப் பிறகு, அவரது கனவு நனவானது.",
+                "trib_tag": "வரலாறு அதன் தொலைநோக்காளர்களை மறப்பதில்லை. இந்தியாவும் மறக்கவில்லை. 🇮🇳",
+
+                "footer_title": "ஆர்வத்தால் (மற்றும் சில அணுக்களால்) இயங்குகிறது ⚛️",
+                "footer_curated": "<span class=\"block text-sm md:text-base mb-1\">வடிவமைப்பு:</span><span class=\"font-black text-2xl text-pastel-pink underline decoration-4 underline-offset-4 inline-block\">ஹரி பிரவின்</span> 🎨",
+                "float_chai_short": "பிடித்திருக்கிறதா?<br/>ஒரு தேநீரால் ஆதரவளிக்கவும் ☕",
+                "footer_chai_long": "என்னுடைய பணி உங்களுக்கு பயனுள்ளதாக இருந்தால்,<br/>இந்த கார்டை கிளிக் செய்து ஒரு தேநீரால் ஆதரவளிக்கவும் ☕",
+                "footer_views": "பார்வையாளர்களின் எண்ணிக்கை",
+                "stamp_kalpakkam": "📍 கல்பாக்கம், TN",
+                "stamp_igcar": "🏢 IGCAR + பவினி",
+                "stamp_dae": "🇮🇳 அணுசக்தி துறை",
+                "stamp_chennai": "❤️ சென்னையிலிருந்து அன்புடன்",
+                "stamp_makeinindia": "🦁 மேக் இன் இந்தியா"
+            }
+        };
+
+        function setLang(lang) {
+            currentLang = lang;
+            
+            // Fix Safari Auto-Translate Bug by setting HTML lang attribute
+            document.documentElement.lang = currentLang;
+            
+            const btnEn = document.getElementById('btn-en');
+            const btnTa = document.getElementById('btn-ta');
+            
+            if (lang === 'en') {
+                btnEn.className = "px-3 py-1.5 md:px-4 md:py-2 font-black text-xs md:text-sm rounded-full transition-colors bg-pastel-pink text-pastel-dark";
+                btnTa.className = "px-3 py-1.5 md:px-4 md:py-2 font-black text-xs md:text-sm rounded-full transition-colors hover:bg-slate-100 text-slate-400";
+            } else {
+                btnTa.className = "px-3 py-1.5 md:px-4 md:py-2 font-black text-xs md:text-sm rounded-full transition-colors bg-pastel-pink text-pastel-dark";
+                btnEn.className = "px-3 py-1.5 md:px-4 md:py-2 font-black text-xs md:text-sm rounded-full transition-colors hover:bg-slate-100 text-slate-400";
+            }
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerHTML = i18n[currentLang][key];
+                }
+            });
+            
+            document.querySelectorAll('.tl-card').forEach(card => {
+                const content = card.querySelector('.tl-content');
+                const btn = card.querySelector('.tl-btn');
+                if (!content.classList.contains('hidden')) {
+                    btn.innerText = currentLang === 'en' ? 'Close ▴' : (currentLang === 'ta' ? 'மூடு ▴' : 'Close ▴');
+                } else {
+                    btn.innerText = currentLang === 'en' ? 'Read More ▾' : (currentLang === 'ta' ? 'மேலும் படிக்க ▾' : 'Read More ▾');
+                }
+            });
+        }
+
+        window.onload = () => setLang('en');
+    </script>
+</body>
+</html>
